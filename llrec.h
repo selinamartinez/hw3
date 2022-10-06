@@ -1,5 +1,6 @@
 #ifndef LLREC_H
 #define LLREC_H
+#include <iostream>
 #include <cstdlib>
 
 /**
@@ -67,6 +68,7 @@ void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
  *   may change [i.e. be filtered])
  *
  */
+
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred);
 
@@ -75,13 +77,38 @@ Node* llfilter(Node* head, Comp pred);
 // implement the above function now.
 //*****************************************************************************
 
+
+
 template <typename Comp>
 Node* llfilter(Node* head, Comp pred)
 {
     //*********************************************
     // Provide your implementation below
     //*********************************************
+    if(head == NULL) {
+        return head;
+    }
+    
+    Node* n = NULL;
+    //get rid of everything you need to get rid of at the beginning of the list
+    while(pred(head->val)) {
+        n = head;
+        head = head->next;
+        delete n;
+    }
+    //you now have a starting head node, now look through the rest of the list
+    if ( (head->next != NULL ) && (pred(head->next->val)) ) {
+        Node* delete_node = head->next;
+        head->next = delete_node->next;
+        delete delete_node;
+        llfilter(head, pred);
+    }
+    //std::cout << "The value is: " << next_node->val << std::endl;
+    if(head->next != NULL) {
+        llfilter(head->next, pred);
+    }
 
+    return head;
 
 }
 
