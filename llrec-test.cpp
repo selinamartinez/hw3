@@ -4,6 +4,18 @@
 #include "llrec.h"
 using namespace std;
 
+class pred {
+    public:
+        bool operator()(int val) const {
+            if (val % 2 == 1) {
+            //is odd so return true
+            return true;
+        }
+        return false;
+}
+
+};
+
 /**
  * Reads integers (separated by whitespace) from a file
  * into a linked list.
@@ -28,6 +40,7 @@ void print(Node* head);
 void dealloc(Node* head);
 
 
+
 Node* readList(const char* filename)
 {
     Node* h = NULL;
@@ -46,10 +59,10 @@ Node* readList(const char* filename)
 void print(Node* head)
 {
     while(head) {
-        cout << head->val << " ";
+        std::cout << head->val << " ";
         head = head->next;
     }
-    cout << endl;
+    std::cout << std::endl;
 }
 
 void dealloc(Node* head)
@@ -69,12 +82,10 @@ void dealloc(Node* head)
 
 
 
-
-
 int main(int argc, char* argv[])
 {
     if(argc < 2) {
-        cout << "Please provide an input file" << endl;
+        std::cout << "Please provide an input file" << std::endl;
         return 1;
     }
 
@@ -82,10 +93,11 @@ int main(int argc, char* argv[])
     // Feel free to update any code below this point
     // -----------------------------------------------
     Node* head = readList(argv[1]);
-    cout << "Original list: ";
+    std::cout << "Original list: ";
     print(head);
 
-    // Test out your linked list code
+    head = llfilter(head, pred());
+    print(head);
 
 
 
