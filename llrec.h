@@ -46,6 +46,7 @@ struct Node
  *   Pivot value
  *
  */
+void llpivot2(Node *&head, Node *&smaller, Node *&larger, int pivot);
 void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
 
 /**
@@ -95,12 +96,14 @@ Node* llfilter(Node* head, Comp pred)
         n = head;
         head = head->next;
         delete n;
+        n = NULL;
     }
     //you now have a starting head node, now look through the rest of the list
     if ( (head->next != NULL ) && (pred(head->next->val)) ) {
         Node* delete_node = head->next;
         head->next = delete_node->next;
         delete delete_node;
+        delete_node = NULL;
         llfilter(head, pred);
     }
     //std::cout << "The value is: " << next_node->val << std::endl;
